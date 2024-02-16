@@ -1,0 +1,49 @@
+apiVersion: tf.upbound.io/v1beta1
+kind: Workspace
+metadata:
+  name: cluster-xyz-roykliment-lab
+  namespace: crossplane-system
+  annotations:
+    # crossplane.io/external-name: myworkspace
+spec:
+  providerConfigRef:
+    name: digitalocean-ams3
+  forProvider:
+    source: Inline
+    module: |
+      data "digitalocean_kubernetes_versions" "k8s_versions" {}
+
+      data "digitalocean_sizes" "node_sizes_ams" {
+        filter {
+          key    = "vcpus"
+          values = [2]
+        }
+
+        filter {
+          key    = "regions"
+          values = [var.region]
+        }
+
+        sort {
+          key       = "price_monthly"
+          direction = "asc"
+        }
+      }
+
+      module "cluster-xyz-roykliment-lab" {
+        source                        = "nlamirault/doks/digitalocean"
+        version                       = "1.2.0"
+        cluster_name                  = "cluster-xyz-roykliment-lab"
+        auto_scale                    = true
+        auto_upgrade                  = true
+        kubernetes_version            = data.digitalocean_kubernetes_versions.k8s_versions.latest_version
+        maintenance_policy_day        = "monday"
+        maintenance_policy_start_time = "03:00"
+        region                        = var.region
+        size                          = element(data.digitalocean_sizes.node_sizes_ams.sizes, 0).slug
+        node_count                    = 3
+      }
+  # All Terraform outputs are written to the connection secret.
+  writeConnectionSecretToRef:
+    namespace: default
+    name: terraform-workspace-example-inline

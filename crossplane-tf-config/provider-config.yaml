@@ -1,0 +1,43 @@
+apiVersion: tf.upbound.io/v1beta1
+kind: ProviderConfig
+metadata:
+  name: digitalocean-ams3
+spec:
+  credentials:
+    # Filename has to comply with below naming convention:
+    # - Files named exactly terraform.tfvars or terraform.tfvars.json.
+    # - Any files with names ending in .auto.tfvars or .auto.tfvars.json.
+    - filename: terraform.tfvars.json
+      source: Secret
+      secretRef:
+        namespace: crossplane-system
+        name: do-creds
+        key: credentials
+  configuration: |
+      terraform {
+        required_providers {
+          digitalocean = {
+            source = "digitalocean/digitalocean"
+            version = "~> 2.0"
+          }
+        }
+        
+        backend "kubernetes" {
+          secret_suffix     = "providerconfig-do-ams3"
+          namespace         = "crossplane-system"
+          in_cluster_config = true
+        }
+      }
+    
+      variable "do_token" {
+        type = string
+      }
+
+      variable "region" {
+        type = string
+        default = "ams3"
+      }
+    
+      provider "digitalocean" {
+        token = var.do_token
+      }
