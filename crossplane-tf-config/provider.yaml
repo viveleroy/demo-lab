@@ -2,7 +2,7 @@ apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "5"
+    argocd.argoproj.io/sync-wave: "-5"
   name: provider-terraform
 spec:
   package: xpkg.upbound.io/upbound/provider-terraform:v0.14.1
