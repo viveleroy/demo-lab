@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vcluster-roy
+spec:
+  destination:
+    name: do-ams3-cluster-xyz-roykliment-lab
+    namespace: vcluster-roy
+    server: ''
+  source:
+    path: ''
+    repoURL: 'https://charts.loft.sh'
+    targetRevision: 0.19.0
+    chart: vcluster
+  sources: []
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
