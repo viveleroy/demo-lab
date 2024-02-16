@@ -44,6 +44,10 @@ spec:
         size                          = element(data.digitalocean_sizes.node_sizes_ams.sizes, 0).slug
         node_count                    = 3
       }
+
+      output "cluster_name" {
+        value = module.cluster-xyz-roykliment-lab.cluster_name
+      }
   # All Terraform outputs are written to the connection secret.
   writeConnectionSecretToRef:
     namespace: default
