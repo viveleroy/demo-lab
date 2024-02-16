@@ -4,6 +4,5 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "5"
   name: provider-terraform
-  namespace: crossplane-system
 spec:
   package: xpkg.upbound.io/upbound/provider-terraform:v0.14.1

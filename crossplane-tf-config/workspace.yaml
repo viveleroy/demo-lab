@@ -4,7 +4,6 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "15"
   name: cluster-xyz-roykliment-lab
-  namespace: crossplane-system
   annotations:
     # crossplane.io/external-name: myworkspace
 spec:
