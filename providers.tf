@@ -8,5 +8,5 @@ terraform {
 }
 
 provider "digitalocean" {
-  token = "dop_v1_056c5fcc5a6d4b7781638019b51138e160e2bc7ce4789daee3c49dbb5527732a"
+  token = var.do_token
 }
