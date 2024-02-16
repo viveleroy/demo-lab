@@ -1,6 +1,8 @@
 apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
   name: provider-terraform
   namespace: crossplane-system
 spec:

@@ -1,6 +1,8 @@
 apiVersion: tf.upbound.io/v1beta1
 kind: Workspace
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "15"
   name: cluster-xyz-roykliment-lab
   namespace: crossplane-system
   annotations:
