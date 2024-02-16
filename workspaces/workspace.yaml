@@ -42,7 +42,7 @@ spec:
         maintenance_policy_start_time = "03:00"
         region                        = var.region
         size                          = element(data.digitalocean_sizes.node_sizes_ams.sizes, 0).slug
-        node_count                    = 3
+        node_count                    = 1
       }
 
       output "cluster_name" {
